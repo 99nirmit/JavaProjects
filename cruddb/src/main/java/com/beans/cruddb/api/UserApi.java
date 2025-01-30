@@ -25,7 +25,7 @@ public class UserApi {
                 .orElseThrow(() -> new RuntimeException("User Not Found :" + id));
     }
 
-    @PostMapping("/save")
+    @PostMapping("/create")
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
     }
