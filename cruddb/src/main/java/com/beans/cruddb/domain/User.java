@@ -1,8 +1,14 @@
 package com.beans.cruddb.domain;
 
+import com.beans.cruddb.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,6 +24,11 @@ public class User {
 
     private String email;
 
+    private String userName;
+
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
 }
