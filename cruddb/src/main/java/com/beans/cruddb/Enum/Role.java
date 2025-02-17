@@ -1,4 +1,4 @@
-package com.beans.cruddb;
+package com.beans.cruddb.Enum;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

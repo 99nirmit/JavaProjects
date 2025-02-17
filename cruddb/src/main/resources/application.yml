@@ -1,9 +1,23 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+
+  redis:
+    host: localhost
+    port: 6379 # Ensure this is correct
+    password: Nirmit@99
+
   datasource:
     url: jdbc:mysql://localhost:3306/dbcrud
     username: root
     password: Nirmit@99
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update

@@ -1,6 +1,5 @@
 package com.beans.cruddb.service;
-
-import com.beans.cruddb.Role;
+import com.beans.cruddb.Enum.Role;
 import com.beans.cruddb.domain.User;
 import com.beans.cruddb.repository.UserRepository;
 import jakarta.transaction.Transactional;
