@@ -32,7 +32,8 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(request -> request
                 .requestMatchers("/api/**",
-                        "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/redis/api/test/save"
+                        "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
+                        "/redis/api/test/save", "api/scrapper/**"
                 ).permitAll() // Allow access to Swagger & public APIs
                 .requestMatchers("/users/**").authenticated() // Require authentication for user-related endpoints
                 .requestMatchers("/admin/**").hasAuthority("ADMIN") // Only users with "ADMIN" role can access "/admin/**"
