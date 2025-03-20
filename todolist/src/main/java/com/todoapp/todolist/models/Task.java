@@ -26,7 +26,10 @@ public class Task {
     private Status status;
 
     private LocalDateTime createdAt;
+
     private LocalDateTime updatedAt;
+
+    private LocalDateTime dueDate;
 
     @PrePersist
     protected void createdAt(){
