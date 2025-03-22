@@ -3,11 +3,12 @@ package com.employeemanagementapp.employeemanagementsystem.service;
 import com.employeemanagementapp.employeemanagementsystem.models.Employee;
 import com.employeemanagementapp.employeemanagementsystem.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -19,8 +20,10 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public List<Employee> getALlEmployee(){
-        return employeeRepository.findAll();
+    public Page<Employee> getAllEmployee(int page, int size, String sortBy, String order){
+        Sort sort = order.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return employeeRepository.findAll(pageable);
     }
 
     public Employee getEmployee(Long id){
@@ -41,5 +44,10 @@ public class EmployeeService {
     public void deleteEmployee(Long id){
         Employee deleteEmployee = getEmployee(id);
         employeeRepository.delete(deleteEmployee);
+    }
+
+    public Page<Employee> getEmployeeByDepartment(String department, int page, int size){
+        Pageable pageable1 = PageRequest.of(page, size);
+        return employeeRepository.findByDepartment(department, pageable1);
     }
 }

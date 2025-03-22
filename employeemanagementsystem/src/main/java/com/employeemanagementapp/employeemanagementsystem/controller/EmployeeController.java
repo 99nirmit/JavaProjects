@@ -2,11 +2,9 @@ package com.employeemanagementapp.employeemanagementsystem.controller;
 
 import com.employeemanagementapp.employeemanagementsystem.models.Employee;
 import com.employeemanagementapp.employeemanagementsystem.service.EmployeeService;
-import com.employeemanagementapp.employeemanagementsystem.service.PaginationAndSortingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -15,17 +13,17 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private PaginationAndSortingService paginationAndSortingService;
-
     @PostMapping("/save")
     private Employee addEmployee(@RequestBody Employee employee){
         return employeeService.addEmployee(employee);
     }
 
     @GetMapping("/")
-    private List<Employee> getAllEmployee(){
-        return employeeService.getALlEmployee();
+    private Page<Employee> getAllEmployee(@RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size,
+                                          @RequestParam(defaultValue = "id") String sortBy,
+                                          @RequestParam(defaultValue = "asc") String order){
+        return employeeService.getAllEmployee(page, size, sortBy, order);
     }
 
     @GetMapping("/{id}")
@@ -44,11 +42,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/department")
-    private List<Employee> getEmployeeByDepartment(@RequestParam String department){
-        return paginationAndSortingService.sortByDepartment(department);
+    private Page<Employee> getEmployeeByDepartment(@RequestParam String department,
+                                                   @RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "10") int size){
+        return employeeService.getEmployeeByDepartment(department,page, size);
+
     }
-
-    @GetMapping("/salary")
-
 
 }
