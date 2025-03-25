@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: expensetracker
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/expensetracker
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Nirmit@99
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    shoe-sql: true
