@@ -1,5 +1,6 @@
 package com.trackerapp.expensetracker.config;
 
+import com.trackerapp.expensetracker.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,18 +29,20 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.authorizeHttpRequests(request -> request
 
-                .requestMatchers("/api/auth/**",
-                        "/swagger-ui/**", "/v3/api-docs/**", "/swagger-rescources/**",
-                        "api/users/create"
+                .requestMatchers("api/user/save/**","api/auth/login",
+                        "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
+                        "api/users/save"
                 ).permitAll()
-                .requestMatchers("/api/users/**").authenticated())
+                .requestMatchers("/api/user/**").authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

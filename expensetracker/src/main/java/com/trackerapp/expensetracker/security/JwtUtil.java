@@ -30,7 +30,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public String extractUsername(String token){
+    public String getUserNameFromJwtToken(String token){
         return extractAllClaim(token).getSubject();
     }
 
