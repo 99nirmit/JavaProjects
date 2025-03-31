@@ -42,7 +42,9 @@ public class SecurityConfig {
                         "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
                         "api/users/save"
                 ).permitAll()
-                .requestMatchers("/api/user/**").authenticated())
+                .requestMatchers("/api/user/**").authenticated()
+                .requestMatchers("/api/expense/**").authenticated()
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
