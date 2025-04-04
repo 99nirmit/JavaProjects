@@ -12,7 +12,7 @@ spring:
     password: Nirmit@99
 
   jpa:
-    database-platform: org.hibernate.dialect.MYSQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
