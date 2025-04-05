@@ -38,6 +38,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updateAt;
