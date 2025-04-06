@@ -3,15 +3,12 @@ package com.ecommerceapp.ecommerce.services;
 import com.ecommerceapp.ecommerce.DTOs.BuyNowDTO;
 import com.ecommerceapp.ecommerce.models.*;
 import com.ecommerceapp.ecommerce.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class OrderService {
@@ -34,6 +31,7 @@ public class OrderService {
     @Autowired
     private CartItemRepository cartItemRepository;
 
+    @Transactional
     public Order placeDirectOrder(Long userId, BuyNowDTO buyNowDTO){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
@@ -45,18 +43,16 @@ public class OrderService {
         Order order = new Order();
         OrderItem orderItem = orderItemService.createOrderItem(buyNowDTO, order);
         order.setUser(user);
-        order.setOrderItems(orderItem.getOrder().getOrderItems());
+        order.setOrderItems(List.of(orderItem));
         order.setTotalAmount(product.getPrice() * buyNowDTO.getQuantity());
 
         return orderRepository.save(order);
     }
 
+    @Transactional
     public Order placeOrderFromCart(Long userId, Long cartId){
         Cart existingCart = cartRepository.findByUserIdAndId(userId, cartId)
                 .orElseThrow(() -> new RuntimeException("Cart Not Found"));
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         if(existingCart.getCartItems().isEmpty()){
             throw new RuntimeException("Cart is empty.Cannot Place Order");
@@ -90,11 +86,15 @@ public class OrderService {
     }
 
     public Order getOrderById(Long userId, Long orderId){
-        return orderRepository.findUserIdAndOrderId(userId, orderId);
+        return orderRepository.findByUser_IdAndId(userId, orderId);
     }
 
-    public List<Order> getAllOrder(Long userId){
-        return orderRepository.findByUserId(userId);
+    public List<Order> getAllOrderByUerId(Long userId){
+        return orderRepository.findByUser_Id(userId);
+    }
+
+    public List<Order> getALlOrdersHistory(){
+        return orderRepository.findAll();
     }
 
 }
