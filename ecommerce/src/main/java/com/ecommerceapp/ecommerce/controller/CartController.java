@@ -15,9 +15,9 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/{userId}/{id}")
-    public Cart addProductToCart(@PathVariable Long userId, @PathVariable Long id, @RequestBody ProductCartDTO productCartDTO){
-        return cartService.addProductToCart(userId, id, productCartDTO);
+    @PostMapping("/{userId}")
+    public Cart addProductToCart(@PathVariable Long userId, @RequestBody ProductCartDTO productCartDTO){
+        return cartService.addProductToCart(userId, productCartDTO);
     }
 
     @GetMapping("/")
@@ -35,7 +35,7 @@ public class CartController {
         cartService.deleteCartByUser(userId, id);
     }
 
-    @DeleteMapping("/{cartId}")
+    @DeleteMapping("/remove/{cartId}")
     public void clearCart(@PathVariable Long cartId){
         cartService.clearCart(cartId);
     }

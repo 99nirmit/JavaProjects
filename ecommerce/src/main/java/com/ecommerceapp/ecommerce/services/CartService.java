@@ -33,15 +33,12 @@
         @Autowired
         private CartItemService cartItemService;
 
-        public Cart addProductToCart(Long userId, Long id, ProductCartDTO productCartDTO){
-            Cart cart = cartRepository.findByUserIdAndId(userId, id)
-                    .orElseThrow(()-> new RuntimeException("Cart Not Found"));
+        public Cart addProductToCart(Long userId, ProductCartDTO productCartDTO){
+                Cart cart = cartRepository.findByUserId(userId)
+                        .orElseThrow(() -> new RuntimeException("Cart Not Found"));
 
             Products products = productsRepository.findById(productCartDTO.getProductId())
                     .orElseThrow(()-> new RuntimeException("Product Not Found"));
-
-            User user = userRepository.findById(productCartDTO.getUserId())
-                    .orElseThrow(()-> new RuntimeException("User Not Found with Id"));
 
             Optional<CartItem> existingCard = cart.getCartItems().stream()
                     .filter(item -> item.getProducts().getId().equals(products.getId()))
@@ -76,7 +73,7 @@
         }
 
         public Long getCartItemCount(){
-            long count = cartItemService.getCartItemCount();
+            long count = cartRepository.count();
             return count;
         }
 
