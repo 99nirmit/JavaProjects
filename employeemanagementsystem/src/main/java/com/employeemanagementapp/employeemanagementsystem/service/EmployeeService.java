@@ -59,8 +59,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id){
-        Employee deleteEmployee = getEmployee(id);
-        employeeRepository.delete(deleteEmployee);
+        employeeRepository.deleteById(id);
     }
 
     public Page<Employee> getEmployeeByDepartment(String department, int page, int size){
