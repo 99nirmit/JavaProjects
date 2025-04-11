@@ -15,6 +15,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     Optional<Expense> findUserByIdAndUserId(Long id, Long userId);
 
+    void deleteUserByIdAndUserId(Long id, Long userId);
+
     Page<Expense> findByUserId(Long userId, Pageable pageable);
 
     Page<Expense> findByUserIdAndAmountBetween(Long userId, Double minAmount, Double maxAmount, Pageable pageable);

@@ -50,21 +50,6 @@ public class ExpenseService {
                 .orElseThrow(() -> new RuntimeException("Expense Not Found By user_id " + userId + " and id " + id));
     }
 
-    public Page<Expense> getExpenseByFilters(Long userId, Double minAmount, Double endDate,
-                                             LocalDate startDate, LocalDate endDate, int page,
-                                             int size, String sortBy, String order){
-        Sort sort = order.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-
-        if(minAmount != null && endDate != null){
-            return expenseRepository.findByUserIdAndAmountBetween(userId, minAmount, endDate, pageable);
-        } else if (startDate != null && endDate != null) {
-            return expenseRepository.findByUserIdAndDateBetween(userId, startDate, endDate, pageable);
-        }else{
-            return expenseRepository.findByUserId(userId, pageable);
-        }
-    }
-
     public Expense updateExpense(Long userId, Long id, Expense updateExpense){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with " + userId));
@@ -79,6 +64,26 @@ public class ExpenseService {
 
         return expenseRepository.save(existingExpense);
     }
+
+    public void deleteExpense(Long userId, Long id){
+        expenseRepository.deleteUserByIdAndUserId(id, userId);
+    }
+
+//    public Page<Expense> getExpenseByFilters(Long userId, Double minAmount, Double endDate,
+//                                             LocalDate startDate, LocalDate endDate, int page,
+//                                             int size, String sortBy, String order){
+//        Sort sort = order.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//
+//        if(minAmount != null && endDate != null){
+//            return expenseRepository.findByUserIdAndAmountBetween(userId, minAmount, endDate, pageable);
+//        } else if (startDate != null && endDate != null) {
+//            return expenseRepository.findByUserIdAndDateBetween(userId, startDate, endDate, pageable);
+//        }else{
+//            return expenseRepository.findByUserId(userId, pageable);
+//        }
+//    }
+
 
     // update & pagination
     // Filter Expenses (By Category, Date Range, or Amount)

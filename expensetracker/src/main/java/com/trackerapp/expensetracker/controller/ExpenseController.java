@@ -31,19 +31,19 @@ public class ExpenseController {
         return expenseService.getExpense(id, userId);
     }
 
-    @GetMapping("/page")
-    public Page<Expense> getExpenseByFilters(@PathVariable Long userId,
-                                             @RequestParam(required = false) Double minAmount,
-                                             @RequestParam(required = false) Double maxAmount,
-                                             @RequestParam(required = false) LocalDate startDate,
-                                             @RequestParam(required = false) LocalDate endDate,
-                                             @RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size,
-                                             @RequestParam(defaultValue = "createdAt") String sortBy,
-                                             @RequestParam(defaultValue = "desc") String order
-                                            ){
-        return expenseService.getExpenseByFilters(userId, minAmount, maxAmount, startDate, endDate, page, size, sortBy, order);
-    }
+//    @GetMapping("/page")
+//    public Page<Expense> getExpenseByFilters(@PathVariable Long userId,
+//                                             @RequestParam(required = false) Double minAmount,
+//                                             @RequestParam(required = false) Double maxAmount,
+//                                             @RequestParam(required = false) LocalDate startDate,
+//                                             @RequestParam(required = false) LocalDate endDate,
+//                                             @RequestParam(defaultValue = "0") int page,
+//                                             @RequestParam(defaultValue = "10") int size,
+//                                             @RequestParam(defaultValue = "createdAt") String sortBy,
+//                                             @RequestParam(defaultValue = "desc") String order
+//                                            ){
+//        return expenseService.getExpenseByFilters(userId, minAmount, maxAmount, startDate, endDate, page, size, sortBy, order);
+//    }
 
     @PutMapping("/{userId}/{id}/update")
     public Expense updateExpenses(@PathVariable Long userId, @PathVariable Long id, @RequestBody Expense expense){
