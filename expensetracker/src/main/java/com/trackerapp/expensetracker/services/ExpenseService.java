@@ -43,18 +43,13 @@ public class ExpenseService {
     }
 
     public Expense getExpense(Long id, Long userId){
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with " + userId));
-
             return expenseRepository.findUserByIdAndUserId(id, userId)
                 .orElseThrow(() -> new RuntimeException("Expense Not Found By user_id " + userId + " and id " + id));
     }
 
     public Expense updateExpense(Long userId, Long id, Expense updateExpense){
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with " + userId));
 
-        Expense existingExpense = expenseRepository.findById(id)
+        Expense existingExpense = expenseRepository.findUserByIdAndUserId(id, userId)
                 .orElseThrow(() -> new RuntimeException("Expense Not Found By id" + id));
 
         existingExpense.setAmount(updateExpense.getAmount());
