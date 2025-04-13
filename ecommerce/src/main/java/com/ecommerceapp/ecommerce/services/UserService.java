@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,15 +27,17 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
     }
 
-    public User updateUser(User updatedUer){
-        User existingUser = new User();
-        existingUser.setName(updatedUer.getName());
-        existingUser.setEmail(updatedUer.getEmail());
-        existingUser.setPassword(updatedUer.getPassword());
-        existingUser.setRoles(updatedUer.getRoles());
-        existingUser.setPhoneNumber(updatedUer.getPhoneNumber());
-        existingUser.setAddress(updatedUer.getAddress());
-        existingUser.setStatus(updatedUer.getStatus());
+    public User updateUser(Long userId, User updatedUser){
+
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
+        existingUser.setName(updatedUser.getName());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setRoles(updatedUser.getRoles());
+        existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+        existingUser.setAddress(updatedUser.getAddress());
+        existingUser.setStatus(updatedUser.getStatus());
 
         return userRepository.save(existingUser);
     }
