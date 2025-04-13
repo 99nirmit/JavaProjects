@@ -24,17 +24,6 @@ public class CartItemService {
 
     private CartItemRepository cartItemRepository;
 
-
-
-    public Cart getCartByUser(Long userId, Long id){
-        return cartRepository.findByUserIdAndId(userId, id)
-                .orElseThrow(()-> new RuntimeException("UserId and CartId Not Found"));
-    }
-
-    public void deleteCartByUser(Long userId, Long id){
-        cartRepository.deleteCartByUserIdAndId(userId, id);
-    }
-
     public CartItem createNewCartItem (ProductCartDTO productCartDTO, Products products, Cart cart){
 
         CartItem cartItem = new CartItem();
@@ -58,6 +47,15 @@ public class CartItemService {
 
     public Long getCartItemCount(){
         return cartItemRepository.count();
+    }
+
+    public Cart getCartByUser(Long userId, Long id){
+        return cartRepository.findByUserIdAndId(userId, id)
+                .orElseThrow(()-> new RuntimeException("UserId and CartId Not Found"));
+    }
+
+    public void deleteCartByUser(Long userId, Long id){
+        cartRepository.deleteCartByUserIdAndId(userId, id);
     }
 
 }

@@ -10,6 +10,7 @@ public class BuyNowDTO {
 
     private Long userId;
 
+
     private Long quantity;
 
     private Long productId;

@@ -15,8 +15,8 @@ public class OrderItemService {
     @Autowired
     ProductsService productsService;
 
-    public OrderItem createOrderItem(BuyNowDTO buyNowDTO, Order order){
-        Products getProducts = productsService.getProduct(buyNowDTO.getProductId());
+    public OrderItem createOrderItem(Long userId, BuyNowDTO buyNowDTO, Order order){
+        Products getProducts = productsService.getProduct(userId, buyNowDTO.getProductId());
         OrderItem orderItem = new OrderItem();
         orderItem.setQuantity(buyNowDTO.getQuantity());
         orderItem.setPriceAtOrderTime(getProducts.getPrice());

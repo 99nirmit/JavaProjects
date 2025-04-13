@@ -41,7 +41,7 @@ public class OrderService {
 
 
         Order order = new Order();
-        OrderItem orderItem = orderItemService.createOrderItem(buyNowDTO, order);
+        OrderItem orderItem = orderItemService.createOrderItem(userId, buyNowDTO, order);
         order.setUser(user);
         order.setOrderItems(List.of(orderItem));
         order.setTotalAmount(product.getPrice() * buyNowDTO.getQuantity());

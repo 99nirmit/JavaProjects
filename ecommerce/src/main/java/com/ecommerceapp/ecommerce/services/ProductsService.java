@@ -17,18 +17,16 @@ public class ProductsService {
         return productsRepository.save(products);
     }
 
-    public List<Products> getAllProducts(){
-        return productsRepository.findAll();
+    public List<Products> getAllProductsByUserId(Long userId){
+        return productsRepository.findAllProductsByUserId(userId);
     }
 
-    public Products getProduct(Long id){
-        return productsRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Product by Id not found: " + id));
+    public Products getProduct(Long userId, Long id){
+        return productsRepository.findProductByUserIdAndId(userId, id);
     }
 
-    public Products updateProduct(Long id, Products toUpdateProduct){
-        Products existingProduct = productsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User Not Found " + id));
+    public Products updateProduct(Long userId, Long id, Products toUpdateProduct){
+        Products existingProduct = productsRepository.findProductByUserIdAndId(userId, id);
 
         existingProduct.setName(toUpdateProduct.getName());
         existingProduct.setDescription(toUpdateProduct.getDescription());
@@ -39,7 +37,7 @@ public class ProductsService {
         return productsRepository.save(existingProduct);
     }
 
-    public void deleteProducts(Long id){
-        productsRepository.deleteById(id);
+    public void deleteProducts(Long userId, Long id){
+        productsRepository.deleteProductByUserIdAndId(userId, id);
     }
 }
