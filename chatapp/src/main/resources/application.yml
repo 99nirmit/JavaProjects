@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://nirmitrsawlekar:root@cluster0.abcd.mongodb.net/chatapp?retryWrites=true&w=majority
+      database: chatapp
+
+# Optional: Server port and logging
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
