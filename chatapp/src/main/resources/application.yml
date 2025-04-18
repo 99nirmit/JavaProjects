@@ -1,13 +1,18 @@
-spring:
-  data:
-    mongodb:
-      uri: mongodb+srv://nirmitrsawlekar:root@cluster0.abcd.mongodb.net/chatapp?retryWrites=true&w=majority
-      database: chatapp
-
-# Optional: Server port and logging
 server:
   port: 8080
 
-logging:
-  level:
-    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+spring:
+  application:
+    name: chatapp
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/chatapp
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Nirmit@99
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true

@@ -17,11 +17,8 @@ public class RoomService {
     private RoomRepository roomRepository;
 
     //create Room
-    public Room createRoom(Long roomId){
-
-        Room room = new Room();
-        room.setId(roomId);
-        Room savedRoom = roomRepository.save(room);
+    public Room createRoom(Room room){
+        roomRepository.save(room);
         return ResponseEntity.status(HttpStatus.CREATED).body(room).getBody();
     }
 
@@ -29,8 +26,8 @@ public class RoomService {
     //getRoom
 
     public Room getRoom(Long roomId) {
-        Optional<Room> room = roomRepository.findById(roomId);
-        return ResponseEntity.of(room).getBody();
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room Not Found By this id" + roomId));
     }
 
     //get messages of room
