@@ -29,14 +29,14 @@ public class RoomService {
 
     //getRoom
 
-    public Room getRoom(Long roomId) {
+    public Room getRoom(String roomId) {
         return roomRepository.findByRoomId(roomId);
     }
 
     //get messages of room
 
     @Transactional
-    public List<Messages> getMessageOfRoom(Long roomId) {
+    public List<Messages> getMessageOfRoom(String roomId) {
         Room roomById = roomRepository.findByRoomId(roomId);
         return roomById.getMessages();
     }

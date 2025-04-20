@@ -11,12 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MessagesDTO {
 
-    private Long id;
-
     private String sender;
 
     private String content;
 
-    private Long roomId;
+    private String roomId;
 
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,11 +21,11 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long roomId;
+    private String roomId;
 
     private String roomName;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
-    private List<Messages> messages;
+    private List<Messages> messages = new ArrayList<>();
 
 }

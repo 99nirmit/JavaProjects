@@ -13,7 +13,7 @@ public class RoomDTO {
 
     private Long id;
 
-    private Long roomId;
+    private String roomId;
 
     private String roomName;
 }
