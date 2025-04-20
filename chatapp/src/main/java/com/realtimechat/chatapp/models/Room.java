@@ -24,7 +24,7 @@ public class Room {
 
     private String roomName;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     private List<Messages> messages;
 
 }

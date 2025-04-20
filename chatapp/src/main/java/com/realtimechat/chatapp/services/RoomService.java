@@ -2,6 +2,7 @@ package com.realtimechat.chatapp.services;
 import com.realtimechat.chatapp.models.Messages;
 import com.realtimechat.chatapp.models.Room;
 import com.realtimechat.chatapp.repository.RoomRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +19,26 @@ public class RoomService {
 
     //create Room
     public Room createRoom(Room room){
-        roomRepository.save(room);
-        return ResponseEntity.status(HttpStatus.CREATED).body(room).getBody();
+
+        if(roomRepository.existsByRoomId(room.getRoomId())){
+            throw new IllegalArgumentException("Room Already Exits");
+        }
+        return roomRepository.save(room);
     }
 
 
     //getRoom
 
     public Room getRoom(Long roomId) {
-        return roomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Room Not Found By this id" + roomId));
+        return roomRepository.findByRoomId(roomId);
     }
 
     //get messages of room
 
+    @Transactional
     public List<Messages> getMessageOfRoom(Long roomId) {
-        Optional<Room> room = roomRepository.findById(roomId);
-        return ResponseEntity.of(room).getBody().getMessages();
+        Room roomById = roomRepository.findByRoomId(roomId);
+        return roomById.getMessages();
     }
 
 }

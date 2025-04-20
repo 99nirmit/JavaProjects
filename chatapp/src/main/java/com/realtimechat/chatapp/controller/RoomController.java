@@ -11,34 +11,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/rooms")
+@CrossOrigin("http://localhost:5173")
 public class RoomController {
 
     @Autowired
     private RoomService roomService;
 
     @PostMapping("/create")
-    public Room createRoom(@RequestBody RoomDTO roomDTO){
+    public  ResponseEntity<Room> createRoom(@RequestBody RoomDTO roomDTO){
         Room room = new Room();
         room.setRoomId(roomDTO.getRoomId());
         room.setRoomName(roomDTO.getRoomName());
-        return roomService.createRoom(room);
+        Room savedRoom = roomService.createRoom(room);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedRoom);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Room> getRoom(@PathVariable Long id){
+    @GetMapping("/{roomId}")
+    public ResponseEntity<Room> getRoom(@PathVariable Long roomId){
         try {
-            Room room = roomService.getRoom(id);
+            Room room = roomService.getRoom(roomId);
             return ResponseEntity.ok(room);
         }catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
-    @GetMapping("/msg/{id}")
-    public List<Messages> getMessagesOfRoom(@PathVariable Long id){
-        return roomService.getMessageOfRoom(id);
+    @GetMapping("/{roomId}/messages")
+    public ResponseEntity<List<Messages>> getMessagesOfRoom(@PathVariable Long roomId){
+        List<Messages> messageOfRoom = roomService.getMessageOfRoom(roomId);
+        return ResponseEntity.of(Optional.ofNullable(messageOfRoom));
     }
 }
